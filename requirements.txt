@@ -1,0 +1,40 @@
+# Web Framework
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Zalo Bot SDK
+python-zalo-bot
+
+# Google Sheets Integration  
+gspread==5.12.0
+google-auth==2.23.4
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+
+# Google Generative AI (Gemini)
+google-generativeai==0.3.2
+
+# Environment Management
+python-dotenv==1.0.0
+
+# HTTP Requests
+requests==2.31.0
+urllib3==2.0.7
+httpx>=0.28.0
+
+# Date/Time Handling
+python-dateutil==2.8.2
+
+# Logging
+colorlog==6.7.0
+
+# Data Handling
+typing-extensions==4.8.0
+
+# Security
+cryptography==41.0.7
+
+# Optional: Development tools (uncomment if needed)
+# pytest==7.4.3
+# black==23.10.1
+# flake8==6.1.0
