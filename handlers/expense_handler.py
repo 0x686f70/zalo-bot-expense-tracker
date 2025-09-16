@@ -19,17 +19,17 @@ async def handle_expense(update: Update, context, sheets_service):
         
         # Hướng dẫn chuyển sang natural language
         await update.message.reply_text(
-            "🤖 **Lệnh /chi đã được thay thế bằng AI!**\n\n"
-            "✨ **Cách mới (đơn giản hơn):**\n"
-            "• `\"500k trà sữa\"` → Tự động phân loại \"Ăn uống\"\n"
-            "• `\"hôm qua 200k xăng\"` → Ghi ngày cụ thể\n"
-            "• `\"bún 50k, laptop 1.5m\"` → Tự tách 2 giao dịch\n\n"
-            "🎯 **Ưu điểm:**\n"
+            "🤖 Lệnh /chi đã được thay thế bằng AI!\n\n"
+            "✨ Cách mới (đơn giản hơn):\n"
+            "• \"500k trà sữa\" → Tự động phân loại \"Ăn uống\"\n"
+            "• \"hôm qua 200k xăng\" → Ghi ngày cụ thể\n"
+            "• \"bún 50k, laptop 1.5m\" → Tự tách 2 giao dịch\n\n"
+            "🎯 Ưu điểm:\n"
             "• Nói chuyện tự nhiên\n"
             "• AI tự phân loại danh mục\n"
             "• Tự động tách nhiều khoản\n"
             "• Hỗ trợ ngày quá khứ\n\n"
-            "💡 **Thử ngay:** Nhắn `\"500k trà sữa\"` thay vì `/chi 500k trà sữa`"
+            "💡 Thử ngay: Nhắn \"500k trà sữa\" thay vì /chi 500k trà sữa"
         )
         return True
         

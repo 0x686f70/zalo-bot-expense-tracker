@@ -19,16 +19,16 @@ async def handle_income(update: Update, context, sheets_service):
         
         # Hướng dẫn chuyển sang natural language
         await update.message.reply_text(
-            "🤖 **Lệnh /thu đã được thay thế bằng AI!**\n\n"
-            "✨ **Cách mới (đơn giản hơn):**\n"
-            "• `\"5m lương\"` → Tự động ghi thu nhập\n"
-            "• `\"nhận 1tr thưởng\"` → AI hiểu từ khóa\n"
-            "• `\"2/9 được 500k\"` → Thu nhập ngày cụ thể\n\n"
-            "🎯 **Ưu điểm:**\n"
+            "🤖 Lệnh /thu đã được thay thế bằng AI!\n\n"
+            "✨ Cách mới (đơn giản hơn):\n"
+            "• \"5m lương\" → Tự động ghi thu nhập\n"
+            "• \"nhận 1tr thưởng\" → AI hiểu từ khóa\n"
+            "• \"2/9 được 500k\" → Thu nhập ngày cụ thể\n\n"
+            "🎯 Ưu điểm:\n"
             "• Nói chuyện tự nhiên\n"
             "• AI tự phân loại\n"
             "• Hỗ trợ ngày tùy chỉnh\n\n"
-            "💡 **Thử ngay:** Nhắn `\"5m lương\"` thay vì `/thu 5m lương`"
+            "💡 Thử ngay: Nhắn \"5m lương\" thay vì /thu 5m lương"
         )
         return True
         

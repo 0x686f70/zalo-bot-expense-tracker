@@ -174,36 +174,36 @@ class UserSheetManager:
     def generate_setup_message(self, user_name: str) -> str:
         """Tạo tin nhắn hướng dẫn setup sheet cho user"""
         return f"""
-👋 **Chào mừng {user_name} đến với Bot Quản Lý Thu Chi AI!**
+👋 Chào mừng {user_name} đến với Bot Quản Lý Thu Chi AI!
 
-🔧 **THIẾT LẬP LẦN ĐẦU (2 phút):**
+🔧 THIẾT LẬP LẦN ĐẦU (2 phút):
 
-📊 **Bạn cần Google Sheet riêng để bảo mật dữ liệu:**
+📊 Bạn cần Google Sheet riêng để bảo mật dữ liệu:
 
-**BƯỚC 1: Tạo Google Sheet**
+BƯỚC 1: Tạo Google Sheet
 • Truy cập: https://sheets.google.com
 • Tạo sheet mới (hoặc dùng sheet có sẵn)
 
-**BƯỚC 2: Chia sẻ với Bot** ⚠️ **QUAN TRỌNG**
+BƯỚC 2: Chia sẻ với Bot ⚠️ QUAN TRỌNG
 • Click nút "Chia sẻ" ở góc phải màn hình
 • Thêm email service account của bot:
-📧 `{os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')}`
-• **PHẢI** chọn quyền **"Trình chỉnh sửa"** (Editor)
+📧 {os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')}
+• PHẢI chọn quyền "Trình chỉnh sửa" (Editor)
 • Click "Gửi" để lưu quyền
 
-**BƯỚC 3: Gửi Link cho Bot**
+BƯỚC 3: Gửi Link cho Bot
 Gửi link Google Sheet cho bot (copy từ thanh địa chỉ):
-`https://docs.google.com/spreadsheets/d/1ABC...XYZ/edit`
+https://docs.google.com/spreadsheets/d/1ABC...XYZ/edit
 
-✨ **SAU KHI SETUP:**
-🤖 Bot tự tạo worksheet `{user_name}` cho bạn
+✨ SAU KHI SETUP:
+🤖 Bot tự tạo worksheet {user_name} cho bạn
 🔒 Chỉ bạn và bot xem được dữ liệu
-🚀 Bắt đầu sử dụng: `"500k trà sữa"`, `"5m lương"`
+🚀 Bắt đầu sử dụng: "500k trà sữa", "5m lương"
 
-📱 **VÍ DỤ SỬ DỤNG:**
-• `"bún 50k, laptop 1.5m"` → Tự tách 2 giao dịch
-• `"hôm qua 200k xăng"` → Ghi ngày cụ thể
-• `"thống kê ăn uống"` → Xem báo cáo
+📱 VÍ DỤ SỬ DỤNG:
+• "bún 50k, laptop 1.5m" → Tự tách 2 giao dịch
+• "hôm qua 200k xăng" → Ghi ngày cụ thể
+• "thống kê ăn uống" → Xem báo cáo
 
-💡 **Chỉ cần setup 1 lần duy nhất!**
+💡 Chỉ cần setup 1 lần duy nhất!
 """ 

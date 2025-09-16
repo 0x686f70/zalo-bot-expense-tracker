@@ -316,20 +316,20 @@ class NaturalLanguageHandler:
                 header_date = current_time.split()[1]  # Lấy phần ngày
             
             total_amount = sum(t['amount'] for t in successful_transactions)
-            response = f"✅ **Đã ghi nhận {len(successful_transactions)} khoản chi vào {header_date}!**\n\n"
+            response = f"✅ Đã ghi nhận {len(successful_transactions)} khoản chi vào {header_date}!\n\n"
             
             for i, transaction in enumerate(successful_transactions, 1):
                 response += f"{i}. 💸 {format_currency(transaction['amount'])}\n"
                 response += f"   📂 {transaction['category']}\n"
                 response += f"   📝 {transaction['description']}\n\n"
             
-            response += f"💰 **Tổng cộng:** {format_currency(total_amount)}\n"
+            response += f"💰 Tổng cộng: {format_currency(total_amount)}\n"
             response += f"{date_info}\n"
-            response += f"👤 **Người dùng:** {user_name}\n\n"
-            response += f"🔗 **Xem chi tiết:** {self._get_sheet_url(update)}"
+            response += f"👤 Người dùng: {user_name}\n\n"
+            response += f"🔗 Xem chi tiết: {self._get_sheet_url(update)}"
             
             if failed_transactions:
-                response += f"\n\n⚠️ **Có {len(failed_transactions)} khoản thất bại, vui lòng thử lại!**"
+                response += f"\n\n⚠️ Có {len(failed_transactions)} khoản thất bại, vui lòng thử lại!"
         else:
             response = "❌ Không thể ghi nhận khoản chi nào. Vui lòng thử lại!"
         
@@ -391,7 +391,7 @@ class NaturalLanguageHandler:
         else:
             response = "🚫 Có lỗi khi lưu dữ liệu. Vui lòng thử lại!"
         
-        await update.message.reply_text(response, parse_mode='Markdown')
+        await update.message.reply_text(response)
     
     async def _handle_borrowing(self, update: Update, data: Dict[str, Any], user_name: str):
         """Xử lý khoản đi vay"""
@@ -449,7 +449,7 @@ class NaturalLanguageHandler:
         else:
             response = "🚫 Có lỗi khi lưu dữ liệu. Vui lòng thử lại!"
         
-        await update.message.reply_text(response, parse_mode='Markdown')
+        await update.message.reply_text(response)
     
     async def _handle_stats(self, update: Update, data: Dict[str, Any]):
         """Xử lý thống kê với AI data"""
@@ -523,44 +523,44 @@ class NaturalLanguageHandler:
     async def _handle_help(self, update: Update):
         """Xử lý trợ giúp"""
         response = f"""
-🤖 **BOT QUẢN LÝ THU CHI THÔNG MINH**
+🤖 BOT QUẢN LÝ THU CHI THÔNG MINH
 
-✨ **Tôi hiểu ngôn ngữ tự nhiên và tự động phân loại bằng AI!**
+✨ Tôi hiểu ngôn ngữ tự nhiên và tự động phân loại bằng AI!
 
-💸 **GHI CHI TIÊU:**
-• `"500k trà sữa"` → Tự động phân loại "Ăn uống"
-• `"hôm qua 200k xăng"` → Có thể ghi ngày cụ thể
-• `"bún 50k, laptop 1.5m"` → Tự tách thành 2 giao dịch
-• `"5/9 bánh 150k"` → Ghi cho ngày 5/9
+💸 GHI CHI TIÊU:
+• "500k trà sữa" → Tự động phân loại "Ăn uống"
+• "hôm qua 200k xăng" → Có thể ghi ngày cụ thể
+• "bún 50k, laptop 1.5m" → Tự tách thành 2 giao dịch
+• "5/9 bánh 150k" → Ghi cho ngày 5/9
 
-💰 **GHI THU NHẬP:**
-• `"5m lương"` → Ghi thu nhập
-• `"nhận 1tr thưởng"` → AI hiểu từ khóa
-• `"2/9 thưởng 500k"` → Thu nhập ngày cụ thể
+💰 GHI THU NHẬP:
+• "5m lương" → Ghi thu nhập
+• "nhận 1tr thưởng" → AI hiểu từ khóa
+• "2/9 thưởng 500k" → Thu nhập ngày cụ thể
 
-📊 **XEM THỐNG KÊ:**
-• `"thống kê"` → Tháng hiện tại
-• `"thống kê hôm nay"` → Chỉ hôm nay
-• `"thống kê hôm qua"` → Chỉ hôm qua
-• `"thống kê tháng 8"` → Tháng cụ thể
-• `"thống kê từ 1/8 đến 15/8"` → Khoảng tùy chỉnh
+📊 XEM THỐNG KÊ:
+• "thống kê" → Tháng hiện tại
+• "thống kê hôm nay" → Chỉ hôm nay
+• "thống kê hôm qua" → Chỉ hôm qua
+• "thống kê tháng 8" → Tháng cụ thể
+• "thống kê từ 1/8 đến 15/8" → Khoảng tùy chỉnh
 
-📈 **THỐNG KÊ DANH MỤC:**
-• `"ăn uống"` → Chi tiêu ăn uống tháng này
-• `"ăn uống hôm qua"` → Ăn uống ngày cụ thể
-• `"top chi tiêu"` → Top 5 khoản chi lớn nhất
-• `"danh mục"` → Xem tất cả danh mục
+📈 THỐNG KÊ DANH MỤC:
+• "ăn uống" → Chi tiêu ăn uống tháng này
+• "ăn uống hôm qua" → Ăn uống ngày cụ thể
+• "top chi tiêu" → Top 5 khoản chi lớn nhất
+• "danh mục" → Xem tất cả danh mục
 
-🎯 **DANH MỤC TỰ ĐỘNG:**
+🎯 DANH MỤC TỰ ĐỘNG:
 🍜 Ăn uống • 🛒 Mua sắm • ⛽ Di chuyển • 🏥 Y tế
 🎮 Giải trí • 🏠 Sinh hoạt • 📚 Học tập • 👨‍👩‍👧‍👦 Gia đình
 
-💡 **MẸO HAY:**
-• Có thể ghi nhiều món: `"bún 12k, gà 20k, laptop 1.5m"`
+💡 MẸO HAY:
+• Có thể ghi nhiều món: "bún 12k, gà 20k, laptop 1.5m"
 • Hỗ trợ đơn vị: k (nghìn), m (triệu), tr (triệu)
 • Hiểu ngày: hôm qua, hôm nay, 5/9, 2/10/2024
 
-🚀 **Nói chuyện tự nhiên với tôi! Tôi sẽ hiểu và ghi chép cho bạn!**
+🚀 Nói chuyện tự nhiên với tôi! Tôi sẽ hiểu và ghi chép cho bạn!
 """
         
         await update.message.reply_text(response.strip())
@@ -702,32 +702,32 @@ class NaturalLanguageHandler:
         response = f"""
 👋 Xin chào {user_name}!
 
-🤖 **Tôi là Bot Quản Lý Thu Chi AI - chỉ hỗ trợ về tài chính:**
+🤖 Tôi là Bot Quản Lý Thu Chi AI - chỉ hỗ trợ về tài chính:
 
-💸 **VÍ DỤ CHI TIÊU:**
-• `"500k trà sữa"` → Ăn uống
-• `"hôm qua 200k xăng"` → Di chuyển (ngày cụ thể)
-• `"bún 50k, laptop 1.5m"` → Tự tách 2 giao dịch
+💸 VÍ DỤ CHI TIÊU:
+• "500k trà sữa" → Ăn uống
+• "hôm qua 200k xăng" → Di chuyển (ngày cụ thể)
+• "bún 50k, laptop 1.5m" → Tự tách 2 giao dịch
 
-💰 **VÍ DỤ THU NHẬP:**
-• `"5m lương"` → Lương
-• `"nhận 1tr thưởng"` → Thưởng
-• `"2/9 được 500k"` → Thu nhập ngày 2/9
+💰 VÍ DỤ THU NHẬP:
+• "5m lương" → Lương
+• "nhận 1tr thưởng" → Thưởng
+• "2/9 được 500k" → Thu nhập ngày 2/9
 
-📊 **VÍ DỤ THỐNG KÊ:**
-• `"thống kê"` → Tháng này
-• `"ăn uống hôm qua"` → Danh mục cụ thể
-• `"top chi tiêu"` → Xếp hạng
+📊 VÍ DỤ THỐNG KÊ:
+• "thống kê" → Tháng này
+• "ăn uống hôm qua" → Danh mục cụ thể
+• "top chi tiêu" → Xếp hạng
 
-✨ **TÍNH NĂNG ĐẶC BIỆT:**
+✨ TÍNH NĂNG ĐẶC BIỆT:
 🤖 AI tự động phân loại danh mục
 📅 Hỗ trợ ghi ngày quá khứ
 🔢 Tự động tách nhiều khoản trong 1 tin nhắn
 📊 Thống kê chi tiết với biểu đồ
 
-❓ **Cần trợ giúp chi tiết?** Nhắn `"help"` hoặc `"hướng dẫn"`
+❓ Cần trợ giúp chi tiết? Nhắn "help" hoặc "hướng dẫn"
 
-💡 **Hãy nói chuyện tự nhiên về tài chính với tôi!** 😊
+💡 Hãy nói chuyện tự nhiên về tài chính với tôi! 😊
 """
         
         await update.message.reply_text(response.strip())
@@ -784,42 +784,42 @@ class NaturalLanguageHandler:
         
         if success:
             response = f"""
-✅ **THIẾT LẬP THÀNH CÔNG!**
+✅ THIẾT LẬP THÀNH CÔNG!
 
 👤 User: {user_name}
 📊 Google Sheet đã được kết nối!
 
-🎉 **BẮT ĐẦU SỬ DỤNG:**
+🎉 BẮT ĐẦU SỬ DỤNG:
 • "500k trà sữa" - Ghi chi tiêu
 • "thu 5m lương" - Ghi thu nhập  
 • "thống kê tháng này" - Xem báo cáo
 
-🔒 **Bảo mật:** Chỉ bạn và bot mới truy cập được sheet này!
+🔒 Bảo mật: Chỉ bạn và bot mới truy cập được sheet này!
 """
         else:
             service_email = os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')
             response = f"""
-❌ **LỖI THIẾT LẬP!**
+❌ LỖI THIẾT LẬP!
 
 ⚠️ Không thể kết nối đến Google Sheet của bạn.
 
-🔧 **NGUYÊN NHÂN THƯỜNG GẶP:**
+🔧 NGUYÊN NHÂN THƯỜNG GẶP:
 • Chưa chia sẻ sheet với service account của bot
 • Link không đúng định dạng Google Sheets
 • Sheet không tồn tại hoặc bị xóa
 
-📋 **HƯỚNG DẪN SỬA LỖI:**
+📋 HƯỚNG DẪN SỬA LỖI:
 
-**1. Mở Google Sheet của bạn**
-**2. Click nút "Chia sẻ" ở góc phải màn hình**
-**3. Thêm email này vào quyền truy cập:**
-📧 `{service_email}`
-**4. Chọn quyền "Trình chỉnh sửa" (Editor)**
-**5. Click "Gửi" để lưu**
+1. Mở Google Sheet của bạn
+2. Click nút "Chia sẻ" ở góc phải màn hình
+3. Thêm email này vào quyền truy cập:
+📧 {service_email}
+4. Chọn quyền "Trình chỉnh sửa" (Editor)
+5. Click "Gửi" để lưu
 
-**6. Gửi lại link sheet cho bot**
+6. Gửi lại link sheet cho bot
 
-💡 **Lưu ý:** Bot cần quyền chỉnh sửa để tạo worksheet và ghi dữ liệu cho bạn!
+💡 Lưu ý: Bot cần quyền chỉnh sửa để tạo worksheet và ghi dữ liệu cho bạn!
 
 🔄 Sau khi thêm quyền, hãy gửi lại link sheet!
 """

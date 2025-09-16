@@ -27,22 +27,22 @@ async def handle_stats(update: Update, context, sheets_service):
         
         # Hướng dẫn chuyển sang natural language
         await update.message.reply_text(
-            "🤖 **Lệnh /thongke đã được thay thế bằng AI!**\n\n"
-            "✨ **Cách mới (đơn giản hơn):**\n"
-            "• `\"thống kê\"` → Tháng hiện tại\n"
-            "• `\"thống kê hôm nay\"` → Chỉ hôm nay\n"
-            "• `\"thống kê hôm qua\"` → Chỉ hôm qua\n"
-            "• `\"thống kê tháng 8\"` → Tháng cụ thể\n"
-            "• `\"thống kê từ 1/8 đến 15/8\"` → Khoảng tùy chỉnh\n\n"
-            "📈 **Thống kê danh mục:**\n"
-            "• `\"ăn uống\"` → Chi tiêu ăn uống\n"
-            "• `\"ăn uống hôm qua\"` → Danh mục ngày cụ thể\n"
-            "• `\"top chi tiêu\"` → Top 5 khoản chi lớn nhất\n\n"
-            "🎯 **Ưu điểm:**\n"
+            "🤖 Lệnh /thongke đã được thay thế bằng AI!\n\n"
+            "✨ Cách mới (đơn giản hơn):\n"
+            "• \"thống kê\" → Tháng hiện tại\n"
+            "• \"thống kê hôm nay\" → Chỉ hôm nay\n"
+            "• \"thống kê hôm qua\" → Chỉ hôm qua\n"
+            "• \"thống kê tháng 8\" → Tháng cụ thể\n"
+            "• \"thống kê từ 1/8 đến 15/8\" → Khoảng tùy chỉnh\n\n"
+            "📈 Thống kê danh mục:\n"
+            "• \"ăn uống\" → Chi tiêu ăn uống\n"
+            "• \"ăn uống hôm qua\" → Danh mục ngày cụ thể\n"
+            "• \"top chi tiêu\" → Top 5 khoản chi lớn nhất\n\n"
+            "🎯 Ưu điểm:\n"
             "• Nói chuyện tự nhiên\n"
             "• Thống kê chi tiết với biểu đồ\n"
             "• Hỗ trợ nhiều khoảng thời gian\n\n"
-            "💡 **Thử ngay:** Nhắn `\"thống kê\"` thay vì `/thongke`"
+            "💡 Thử ngay: Nhắn \"thống kê\" thay vì /thongke"
         )
         return True
         
@@ -76,24 +76,24 @@ async def handle_categories(update: Update, context, sheets_service):
         response = "📂 DANH MỤC HIỆN CÓ:\n\n"
         
         if categories['Thu']:
-            response += "💰 **DANH MỤC THU:**\n"
+            response += "💰 DANH MỤC THU:\n"
             for i, category in enumerate(categories['Thu'], 1):
                 response += f"  {i}. {category}\n"
             response += "\n"
         
         if categories['Chi']:
-            response += "💸 **DANH MỤC CHI:**\n"
+            response += "💸 DANH MỤC CHI:\n"
             for i, category in enumerate(categories['Chi'], 1):
                 response += f"  {i}. {category}\n"
         
         # Thêm thống kê nhanh về danh mục
         total_categories = len(categories.get('Thu', [])) + len(categories.get('Chi', []))
-        response += f"\n📊 **Tổng quan:**\n"
+        response += f"\n📊 Tổng quan:\n"
         response += f"• Tổng danh mục: {total_categories}\n"
         response += f"• Danh mục thu: {len(categories.get('Thu', []))}\n"
         response += f"• Danh mục chi: {len(categories.get('Chi', []))}\n"
         
-        response += f"\n💡 **Gợi ý:** Dùng lệnh thống kê để xem chi tiết theo danh mục:\n"
+        response += f"\n💡 Gợi ý: Dùng lệnh thống kê để xem chi tiết theo danh mục:\n"
         response += f"• \"thống kê tháng này\"\n"
         response += f"• \"thống kê tuần này\"\n"
         
@@ -133,13 +133,13 @@ async def handle_category_stats(update: Update, context, sheets_service):
         
         if stats['transaction_count'] == 0:
             await update.message.reply_text(
-                "📊 **THỐNG KÊ THEO DANH MỤC**\n\n"
+                "📊 THỐNG KÊ THEO DANH MỤC\n\n"
                 "📭 Không có giao dịch nào trong tháng này.\n\n"
                 "💡 Hãy thêm giao dịch đầu tiên!"
             )
             return
         
-        response = "📊 **THỐNG KÊ THEO DANH MỤC - THÁNG NÀY**\n\n"
+        response = "📊 THỐNG KÊ THEO DANH MỤC - THÁNG NÀY\n\n"
         
         # Tổng quan
         response += f"💰 Tổng thu: {format_currency(stats['total_income'])}\n"
@@ -151,7 +151,7 @@ async def handle_category_stats(update: Update, context, sheets_service):
         # Phân tích chi tiêu theo danh mục
         expense_categories = stats.get('expense_categories', {})
         if expense_categories:
-            response += "💸 **PHÂN TÍCH CHI TIÊU:**\n"
+            response += "💸 PHÂN TÍCH CHI TIÊU:\n"
             sorted_expense = sorted(expense_categories.items(), key=lambda x: x[1], reverse=True)
             
             for i, (category, amount) in enumerate(sorted_expense, 1):
@@ -164,7 +164,7 @@ async def handle_category_stats(update: Update, context, sheets_service):
         # Phân tích thu nhập theo danh mục  
         income_categories = stats.get('income_categories', {})
         if income_categories:
-            response += "💰 **PHÂN TÍCH THU NHẬP:**\n"
+            response += "💰 PHÂN TÍCH THU NHẬP:\n"
             sorted_income = sorted(income_categories.items(), key=lambda x: x[1], reverse=True)
             
             for i, (category, amount) in enumerate(sorted_income, 1):
@@ -177,7 +177,7 @@ async def handle_category_stats(update: Update, context, sheets_service):
         # Insights
         if expense_categories:
             top_expense = max(expense_categories.items(), key=lambda x: x[1])
-            response += f"🎯 **Nhận xét:**\n"
+            response += f"🎯 Nhận xét:\n"
             response += f"• Danh mục chi nhiều nhất: {top_expense[0]}\n"
             response += f"• Chiếm {(top_expense[1]/stats['total_expense']*100):.1f}% tổng chi tiêu\n"
         
@@ -215,7 +215,7 @@ async def handle_specific_category_stats(update: Update, context, sheets_service
         
         if stats['transaction_count'] == 0:
             await update.message.reply_text(
-                f"📊 **THỐNG KÊ {category_name.upper()}**\n\n"
+                f"📊 THỐNG KÊ {category_name.upper()}\n\n"
                 "📭 Không có giao dịch nào trong tháng này.\n\n"
                 "💡 Hãy thêm giao dịch đầu tiên!"
             )
@@ -242,7 +242,7 @@ async def _handle_top_expenses(update: Update, stats: dict):
     
     if not expense_categories:
         await update.message.reply_text(
-            "📊 **TOP CHI TIÊU**\n\n"
+            "📊 TOP CHI TIÊU\n\n"
             "📭 Chưa có chi tiêu nào trong tháng này!"
         )
         return
@@ -251,7 +251,7 @@ async def _handle_top_expenses(update: Update, stats: dict):
     sorted_expenses = sorted(expense_categories.items(), key=lambda x: x[1], reverse=True)
     top_5 = sorted_expenses[:5]
     
-    response = "🔥 **TOP CHI TIÊU THÁNG NÀY**\n\n"
+    response = "🔥 TOP CHI TIÊU THÁNG NÀY\n\n"
     response += f"💸 Tổng chi tiêu: {format_currency(stats['total_expense'])}\n\n"
     
     medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"]
@@ -260,7 +260,7 @@ async def _handle_top_expenses(update: Update, stats: dict):
         percentage = (amount / stats['total_expense'] * 100) if stats['total_expense'] > 0 else 0
         medal = medals[i] if i < len(medals) else f"{i+1}️⃣"
         
-        response += f"{medal} **{category}**\n"
+        response += f"{medal} {category}\n"
         response += f"   💰 {format_currency(amount)} ({percentage:.1f}%)\n"
         
         # Progress bar
@@ -294,19 +294,19 @@ async def _handle_single_category_stats(update: Update, stats: dict, category_na
     
     if not found_expense and not found_income:
         await update.message.reply_text(
-            f"📊 **THỐNG KÊ {category_name.upper()}**\n\n"
+            f"📊 THỐNG KÊ {category_name.upper()}\n\n"
             f"❌ Không tìm thấy danh mục '{category_name}' trong tháng này.\n\n"
             f"💡 Dùng lệnh 'danh mục' để xem tất cả danh mục hiện có."
         )
         return
     
-    response = f"📊 **THỐNG KÊ {category_name.upper()} - THÁNG NÀY**\n\n"
+    response = f"📊 THỐNG KÊ {category_name.upper()} - THÁNG NÀY\n\n"
     
     if found_expense:
         cat_name, amount = found_expense
         percentage = (amount / stats['total_expense'] * 100) if stats['total_expense'] > 0 else 0
         
-        response += f"💸 **Chi tiêu {cat_name}:**\n"
+        response += f"💸 Chi tiêu {cat_name}:\n"
         response += f"   💰 {format_currency(amount)}\n"
         response += f"   📊 {percentage:.1f}% tổng chi tiêu\n"
         
@@ -317,17 +317,17 @@ async def _handle_single_category_stats(update: Update, stats: dict, category_na
         
         # Gợi ý
         if percentage > 30:
-            response += "⚠️ **Nhận xét:** Danh mục này chiếm tỷ trọng cao!\n"
+            response += "⚠️ Nhận xét: Danh mục này chiếm tỷ trọng cao!\n"
         elif percentage < 5:
-            response += "✅ **Nhận xét:** Chi tiêu hợp lý cho danh mục này.\n"
+            response += "✅ Nhận xét: Chi tiêu hợp lý cho danh mục này.\n"
         else:
-            response += "📈 **Nhận xét:** Mức chi tiêu bình thường.\n"
+            response += "📈 Nhận xét: Mức chi tiêu bình thường.\n"
     
     if found_income:
         cat_name, amount = found_income
         percentage = (amount / stats['total_income'] * 100) if stats['total_income'] > 0 else 0
         
-        response += f"💰 **Thu nhập {cat_name}:**\n"
+        response += f"💰 Thu nhập {cat_name}:\n"
         response += f"   💰 {format_currency(amount)}\n"
         response += f"   📊 {percentage:.1f}% tổng thu nhập\n\n"
     
