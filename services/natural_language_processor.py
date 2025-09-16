@@ -52,6 +52,14 @@ CHỈ XỬ LÝ các ý định liên quan đến tài chính:
    - QUAN TRỌNG - KÈM NGÀY CỤ THỂ: "5/9 bánh 200k", "hôm qua 80k đi chợ", "tuần trước mua áo 300k"
 2. INCOME (Thu nhập): "thu 5m lương", "5m lương", "nhận 1tr", "được 500k"
    - QUAN TRỌNG - KÈM NGÀY CỤ THỂ: "2/9 thưởng 500k", "hôm qua nhận 1tr", "thứ hai lương 5m"
+3. LENDING (Cho vay): "cho vay", "cho mượn", "vay cho", "mượn cho", "cho bạn vay"
+   - Đơn giản: "cho vay 1tr", "cho An mượn 500k", "vay cho Nam 2m"
+   - Chi tiết: "cho bạn vay 10tr trong đó 6tr tiền nhà, 4tr tiền tiết kiệm"
+   - QUAN TRỌNG - KÈM NGÀY CỤ THỂ: "hôm qua cho vay 1tr", "5/9 cho An mượn 500k"
+4. BORROWING (Đi vay): "vay tiền", "mượn tiền", "vay", "mượn"  
+   - Đơn giản: "vay 2tr", "mượn bạn 500k", "vay Nam 1tr"
+   - Chi tiết: "vay 5tr từ anh Minh để trả nợ"
+   - QUAN TRỌNG - KÈM NGÀY CỤ THỂ: "hôm qua vay 1tr", "tuần trước mượn 500k"
 3. STATS (Thống kê tổng): 
    - Mặc định: "thống kê", "báo cáo", "tổng kết" → THÁNG HIỆN TẠI
    - Cụ thể: "thống kê tháng trước", "báo cáo tháng 8", "thống kê tuần này", "thống kê hôm nay"
@@ -125,6 +133,17 @@ QUY TẮC PHÂN LOẠI DANH MỤC CHO EXPENSE - PHÂN TÍCH KỸ LƯỠNG:
 
 - Khác: những thứ THỰC SỰ không thuộc 7 danh mục trên
 
+QUY TẮC PHÂN LOẠI CHO LENDING & BORROWING:
+*** QUAN TRỌNG: LENDING và BORROWING luôn có category cố định ***
+
+- LENDING (Cho vay): category luôn là "Cho vay"
+  * Tất cả giao dịch cho vay đều ghi là "Cho vay"
+  * Mô tả chi tiết sẽ trong phần description
+
+- BORROWING (Đi vay): category luôn là "Đi vay" 
+  * Tất cả giao dịch vay đều ghi là "Đi vay"
+  * Mô tả chi tiết sẽ trong phần description
+
 *** LƯU Ý ĐẶC BIỆT - QUAN TRỌNG NHẤT: ***
 - "nướng" = NẤU ĂN → Ăn uống (KHÔNG PHẢI Khác!)
 - "luộc", "xào", "chiên" = NẤU ĂN → Ăn uống (KHÔNG PHẢI Khác!)
@@ -151,6 +170,36 @@ KẾT QUẢ PHẢI TẠO cho "hôm qua 480k nướng, 575k siêu thị":
 
 CHÚ Ý: CẢ 2 transactions đều có custom_date: "hôm qua" vì từ thời gian ở ĐẦU tin nhắn
 
+*** VÍ DỤ CHO LENDING: ***
+Tin nhắn: "cho bạn vay 10tr trong đó 6tr tiền nhà, 4tr tiền tiết kiệm của anh"
+Kết quả đúng:
+{{
+    "intent": "LENDING",
+    "confidence": 0.95,
+    "data": {{
+        "amount": 10000000,
+        "description": "cho bạn vay 10tr trong đó 6tr tiền nhà, 4tr tiền tiết kiệm",
+        "category": "Cho vay",
+        "custom_date": null,
+        "person": "bạn"
+    }}
+}}
+
+*** VÍ DỤ CHO BORROWING: ***
+Tin nhắn: "vay anh Nam 2tr để trả nợ"
+Kết quả đúng:
+{{
+    "intent": "BORROWING", 
+    "confidence": 0.95,
+    "data": {{
+        "amount": 2000000,
+        "description": "vay anh Nam 2tr để trả nợ",
+        "category": "Đi vay",
+        "custom_date": null,
+        "person": "anh Nam"
+    }}
+}}
+
 TUYỆT ĐỐI KHÔNG ĐƯỢC:
 - Gộp chung: amount=1055000, description="nướng và siêu thị"
 - Sai intent: EXPENSE thay vì MULTIPLE_EXPENSES
@@ -169,8 +218,10 @@ Step 3: Nếu không có → custom_date: null cho tất cả
    - Khi có items thuộc nhiều danh mục khác nhau
    - PHẢI TÁCH RIÊNG từng khoản với amount và category riêng biệt
    - KHÔNG ĐƯỢC gộp chung thành một transaction
-6. CATEGORY_LIST (Xem danh mục): "danh mục", "categories", "xem danh mục"
-7. HELP (Trợ giúp): "help", "hướng dẫn"
+6. LENDING (Cho vay): "cho vay", "cho mượn", "vay cho", "mượn cho"
+7. BORROWING (Đi vay): "vay tiền", "mượn tiền", "vay", "mượn" 
+8. CATEGORY_LIST (Xem danh mục): "danh mục", "categories", "xem danh mục"
+9. HELP (Trợ giúp): "help", "hướng dẫn"
 
 KHÔNG XỬ LÝ:
 - Chào hỏi thông thường: "xin chào", "bạn khỏe không"
@@ -186,17 +237,18 @@ Nếu tin nhắn KHÔNG liên quan đến tài chính, trả về:
 
 Nếu liên quan đến tài chính, trả về:
 {{
-    "intent": "EXPENSE|INCOME|STATS|CATEGORY_STATS|CATEGORY_LIST|MULTIPLE_EXPENSES|HELP",
+    "intent": "EXPENSE|INCOME|LENDING|BORROWING|STATS|CATEGORY_STATS|CATEGORY_LIST|MULTIPLE_EXPENSES|HELP",
     "confidence": 0.0-1.0,
     "data": {{
         "amount": số_tiền_hoặc_null (QUAN TRỌNG: Với nhiều món PHẢI CỘNG TỔNG tất cả, VD: 80k+150k=230000, KHÔNG được là 230),
         "description": "mô_tả",
-        "category": "danh_mục" (chỉ cho EXPENSE/INCOME, PHẢI phân loại chính xác theo quy tắc trên),
+        "category": "danh_mục" (cho EXPENSE/INCOME/LENDING/BORROWING - LENDING→"Cho vay", BORROWING→"Đi vay", PHẢI phân loại chính xác theo quy tắc trên),
         "custom_date": "ngày_cụ_thể_hoặc_null" (VD: "5/9", "2/9", "hôm qua", "tuần trước", "thứ hai", null nếu không có),
         "transactions": [array của nhiều giao dịch] (chỉ cho MULTIPLE_EXPENSES - mỗi transaction có amount, description, category, custom_date riêng),
         "time_period": "ngay|tuan|thang|nam|custom" (cho STATS & CATEGORY_STATS, mặc định "thang"),
         "specific_value": "số_hoặc_keyword" (VD: "8", "12", "thang_truoc", "tuan_truoc"),
-        "category_name": "tên_danh_mục" (chỉ cho CATEGORY_STATS, VD: "ăn uống", "xăng xe", "mua sắm")
+        "category_name": "tên_danh_mục" (chỉ cho CATEGORY_STATS, VD: "ăn uống", "xăng xe", "mua sắm"),
+        "person": "tên_người" (cho LENDING/BORROWING - người cho vay/đi vay, VD: "An", "bạn", "anh Minh")
     }}
 }}
 
@@ -341,8 +393,9 @@ Chỉ trả về JSON, không giải thích gì thêm.
         
         message_lower = message.lower()
         
-        # Skip complex messages
-        if any(word in message_lower for word in [',', ' và ', 'hôm qua', 'ngày', '/', 'từ', 'đến']):
+        # Skip complex messages (but allow lending/borrowing with complex text)
+        has_lending = any(keyword in message_lower for keyword in ['cho vay', 'cho mượn', 'vay cho', 'mượn cho', 'vay tiền', 'mượn tiền'])
+        if not has_lending and any(word in message_lower for word in [',', ' và ', 'hôm qua', 'ngày', '/', 'từ', 'đến']):
             return None
         
         # Check for income keywords first to avoid misclassifying as expense
@@ -413,6 +466,71 @@ Chỉ trả về JSON, không giải thích gì thêm.
                         'amount': amount,
                         'description': message,
                         'category': category
+                    }
+                }
+        
+        # Quick lending detection
+        lending_keywords = ['cho vay', 'cho mượn', 'vay cho', 'mượn cho']
+        if any(keyword in message_lower for keyword in lending_keywords):
+            amount_match = re.search(r'(\d+(?:\.\d+)?)\s*([kmKM])', message)
+            if amount_match:
+                number = float(amount_match.group(1))
+                suffix = amount_match.group(2).lower()
+                amount = int(number * 1000) if suffix == 'k' else int(number * 1000000)
+                
+                # Extract person name
+                person = 'N/A'
+                if 'cho bạn' in message_lower:
+                    person = 'bạn'
+                elif 'cho ' in message_lower:
+                    words = message_lower.split('cho ')
+                    if len(words) > 1:
+                        person_part = words[1].split()[0]
+                        person = person_part
+                
+                return {
+                    'intent': 'LENDING',
+                    'confidence': 0.85,
+                    'data': {
+                        'amount': amount,
+                        'description': message,
+                        'category': 'Cho vay',
+                        'person': person
+                    }
+                }
+        
+        # Quick borrowing detection  
+        borrowing_keywords = ['vay tiền', 'mượn tiền', 'vay', 'mượn']
+        if any(keyword in message_lower for keyword in borrowing_keywords) and not any(lend in message_lower for lend in ['cho vay', 'cho mượn']):
+            amount_match = re.search(r'(\d+(?:\.\d+)?)\s*([kmKM])', message)
+            if amount_match:
+                number = float(amount_match.group(1))
+                suffix = amount_match.group(2).lower()
+                amount = int(number * 1000) if suffix == 'k' else int(number * 1000000)
+                
+                # Extract person name
+                person = 'N/A'
+                if 'vay bạn' in message_lower or 'mượn bạn' in message_lower:
+                    person = 'bạn'
+                elif 'vay ' in message_lower:
+                    words = message_lower.split('vay ')
+                    if len(words) > 1:
+                        person_part = words[1].split()[0]
+                        person = person_part
+                elif 'mượn ' in message_lower:
+                    words = message_lower.split('mượn ')
+                    if len(words) > 1:
+                        person_part = words[1].split()[0]
+                        person = person_part
+                
+                return {
+                    'intent': 'BORROWING',
+                    'confidence': 0.85,
+                    'data': {
+                        'amount': amount,
+                        'description': message,
+                        'category': 'Đi vay',
+                        'person': person
                     }
                 }
         

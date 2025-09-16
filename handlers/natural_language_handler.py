@@ -92,6 +92,14 @@ class NaturalLanguageHandler:
                 await self._handle_multiple_expenses(update, data, user_name)
                 return True
                 
+            elif intent == 'LENDING':
+                await self._handle_lending(update, data, user_name)
+                return True
+                
+            elif intent == 'BORROWING':
+                await self._handle_borrowing(update, data, user_name)
+                return True
+                
             elif intent == 'STATS':
                 await self._handle_stats(update, data)
                 return True
@@ -325,6 +333,122 @@ class NaturalLanguageHandler:
             response = "❌ Không thể ghi nhận khoản chi nào. Vui lòng thử lại!"
         
         await update.message.reply_text(response.strip())
+    
+    async def _handle_lending(self, update: Update, data: Dict[str, Any], user_name: str):
+        """Xử lý khoản cho vay"""
+        amount = data.get('amount')
+        description = data.get('description', 'cho vay')
+        person = data.get('person', 'N/A')
+        
+        if not amount or amount <= 0:
+            await update.message.reply_text(
+                "🤔 Tôi không thấy số tiền rõ ràng. Bạn có thể nói cụ thể hơn không?\n\n" +
+                "💡 Ví dụ: 'cho An vay 2tr' hoặc 'cho bạn vay 1m'"
+            )
+            return
+        
+        # Category cố định cho lending
+        category = "Cho vay"
+        
+        # Lưu vào Google Sheets
+        custom_date = data.get('custom_date')
+        success = self._add_transaction_with_user_info(
+            transaction_type="Chi",  # Cho vay được tính là chi tiêu
+            amount=amount,
+            category=category,
+            note=f"{description} (cho {person})",
+            user_name=user_name,
+            update=update,
+            custom_date=custom_date
+        )
+        
+        if success:
+            from datetime import datetime
+            from utils.date_utils import parse_custom_date
+            
+            # Hiển thị thời gian thực tế được ghi nhận  
+            actual_datetime = parse_custom_date(custom_date)
+            current_time = datetime.now().strftime("%H:%M %d/%m/%Y")
+            
+            if custom_date:
+                date_info = f"📅 Ngày: {actual_datetime.strftime('%d/%m/%Y')} (ghi lúc {current_time})"
+            else:
+                date_info = f"📅 Thời gian: {current_time}"
+            
+            response = f"""
+✅ Đã ghi nhận khoản cho vay vào {current_time}!
+
+💸 Số tiền: {format_currency(amount)}
+📂 Danh mục: {category}
+👥 Cho vay: {person}
+📝 Ghi chú: {description}
+{date_info}
+👤 Người dùng: {user_name}
+
+🔗 Xem chi tiết: {self._get_sheet_url(update)}
+"""
+        else:
+            response = "🚫 Có lỗi khi lưu dữ liệu. Vui lòng thử lại!"
+        
+        await update.message.reply_text(response, parse_mode='Markdown')
+    
+    async def _handle_borrowing(self, update: Update, data: Dict[str, Any], user_name: str):
+        """Xử lý khoản đi vay"""
+        amount = data.get('amount')
+        description = data.get('description', 'đi vay')
+        person = data.get('person', 'N/A')
+        
+        if not amount or amount <= 0:
+            await update.message.reply_text(
+                "🤔 Tôi không thấy số tiền rõ ràng. Bạn có thể nói cụ thể hơn không?\n\n" +
+                "💡 Ví dụ: 'vay anh Nam 1tr' hoặc 'mượn bạn 500k'"
+            )
+            return
+        
+        # Category cố định cho borrowing
+        category = "Đi vay"
+        
+        # Lưu vào Google Sheets
+        custom_date = data.get('custom_date')
+        success = self._add_transaction_with_user_info(
+            transaction_type="Thu",  # Đi vay được tính là thu nhập
+            amount=amount,
+            category=category,
+            note=f"{description} (từ {person})",
+            user_name=user_name,
+            update=update,
+            custom_date=custom_date
+        )
+        
+        if success:
+            from datetime import datetime
+            from utils.date_utils import parse_custom_date
+            
+            # Hiển thị thời gian thực tế được ghi nhận  
+            actual_datetime = parse_custom_date(custom_date)
+            current_time = datetime.now().strftime("%H:%M %d/%m/%Y")
+            
+            if custom_date:
+                date_info = f"📅 Ngày: {actual_datetime.strftime('%d/%m/%Y')} (ghi lúc {current_time})"
+            else:
+                date_info = f"📅 Thời gian: {current_time}"
+            
+            response = f"""
+✅ Đã ghi nhận khoản đi vay vào {current_time}!
+
+💰 Số tiền: {format_currency(amount)}
+📂 Danh mục: {category}
+👥 Vay từ: {person}
+📝 Ghi chú: {description}
+{date_info}
+👤 Người dùng: {user_name}
+
+🔗 Xem chi tiết: {self._get_sheet_url(update)}
+"""
+        else:
+            response = "🚫 Có lỗi khi lưu dữ liệu. Vui lòng thử lại!"
+        
+        await update.message.reply_text(response, parse_mode='Markdown')
     
     async def _handle_stats(self, update: Update, data: Dict[str, Any]):
         """Xử lý thống kê với AI data"""
