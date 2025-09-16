@@ -14,7 +14,6 @@ from handlers.stats_handler import handle_stats, handle_categories, handle_categ
 from handlers.natural_language_handler import NaturalLanguageHandler
 from services.google_sheets import GoogleSheetsService
 from services.user_sheet_manager import UserSheetManager
-from performance_optimizer import performance_optimizer
 
 # Load environment variables
 load_dotenv()

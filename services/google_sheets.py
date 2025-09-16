@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 import logging
 from typing import List, Dict, Optional
 from collections import defaultdict
-from performance_optimizer import cache_sheets_data, performance_optimizer
 
 logger = logging.getLogger(__name__)
 

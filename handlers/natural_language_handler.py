@@ -8,7 +8,6 @@ from services.natural_language_processor import NaturalLanguageProcessor
 from services.google_sheets import GoogleSheetsService
 from services.gemini_ai import GeminiAIService
 from utils.format_utils import format_currency
-from performance_optimizer import performance_optimizer, optimize_response_time
 
 
 logger = logging.getLogger(__name__)

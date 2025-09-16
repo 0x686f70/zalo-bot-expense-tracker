@@ -5,7 +5,6 @@ from typing import Optional, Dict, Any
 from datetime import datetime
 from dotenv import load_dotenv
 from services.gemini_ai import GeminiAIService
-from performance_optimizer import cache_ai_response, performance_optimizer
 
 # Load environment variables
 load_dotenv()
@@ -18,7 +17,6 @@ class NaturalLanguageProcessor:
     def __init__(self):
         self.ai_service = GeminiAIService()
         
-    @cache_ai_response(ttl=300)
     def process_message(self, message: str) -> Optional[Dict[str, Any]]:
         """
         Phân tích tin nhắn tự nhiên và trả về intent + data
