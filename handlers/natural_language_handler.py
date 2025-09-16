@@ -28,9 +28,6 @@ class NaturalLanguageHandler:
         Returns:
             bool: True nếu đã xử lý, False nếu không hiểu
         """
-        # Tối ưu hiệu suất
-        await optimize_response_time()
-        
         # Hiển thị "đang soạn tin..." ngay khi nhận tin nhắn
         await context.bot.send_chat_action(
             chat_id=update.message.chat.id,
