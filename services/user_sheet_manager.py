@@ -184,10 +184,12 @@ class UserSheetManager:
 • Truy cập: https://sheets.google.com
 • Tạo sheet mới (hoặc dùng sheet có sẵn)
 
-**BƯỚC 2: Chia sẻ với Bot**
-• Click nút "Chia sẻ" ở góc phải
-• Thêm email: `{os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')}`
-• Cấp quyền **"Trình chỉnh sửa"**
+**BƯỚC 2: Chia sẻ với Bot** ⚠️ **QUAN TRỌNG**
+• Click nút "Chia sẻ" ở góc phải màn hình
+• Thêm email service account của bot:
+📧 `{os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')}`
+• **PHẢI** chọn quyền **"Trình chỉnh sửa"** (Editor)
+• Click "Gửi" để lưu quyền
 
 **BƯỚC 3: Gửi Link cho Bot**
 Gửi link Google Sheet cho bot (copy từ thanh địa chỉ):

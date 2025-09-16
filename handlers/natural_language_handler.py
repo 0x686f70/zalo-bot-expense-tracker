@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 from datetime import datetime, timedelta
 from typing import Dict, Any
@@ -796,17 +797,31 @@ class NaturalLanguageHandler:
 🔒 **Bảo mật:** Chỉ bạn và bot mới truy cập được sheet này!
 """
         else:
+            service_email = os.getenv('GOOGLE_SERVICE_EMAIL', 'service-account-email')
             response = f"""
 ❌ **LỖI THIẾT LẬP!**
 
 ⚠️ Không thể kết nối đến Google Sheet của bạn.
 
-🔧 **KIỂM TRA:**
-• Link có đúng định dạng Google Sheets không?
-• Đã chia sẻ với service account chưa?
-• Sheet có tồn tại và truy cập được không?
+🔧 **NGUYÊN NHÂN THƯỜNG GẶP:**
+• Chưa chia sẻ sheet với service account của bot
+• Link không đúng định dạng Google Sheets
+• Sheet không tồn tại hoặc bị xóa
 
-💡 Hãy thử lại với link khác hoặc kiểm tra quyền truy cập!
+📋 **HƯỚNG DẪN SỬA LỖI:**
+
+**1. Mở Google Sheet của bạn**
+**2. Click nút "Chia sẻ" ở góc phải màn hình**
+**3. Thêm email này vào quyền truy cập:**
+📧 `{service_email}`
+**4. Chọn quyền "Trình chỉnh sửa" (Editor)**
+**5. Click "Gửi" để lưu**
+
+**6. Gửi lại link sheet cho bot**
+
+💡 **Lưu ý:** Bot cần quyền chỉnh sửa để tạo worksheet và ghi dữ liệu cho bạn!
+
+🔄 Sau khi thêm quyền, hãy gửi lại link sheet!
 """
         
         await update.message.reply_text(response.strip())
